@@ -78,6 +78,7 @@
       place-items: center;
       position: relative;
       padding: clamp(42px, 7vw, 82px) clamp(18px, 5vw, 72px);
+      margin-inline: auto;
     }
 
     .panel::before,
@@ -146,9 +147,11 @@
       z-index: 2;
       display: grid;
       justify-items: center;
+      align-items: center;
       gap: clamp(34px, 6vw, 74px);
       text-align: center;
       width: 100%;
+      margin-inline: auto;
     }
 
     .logo {
@@ -164,7 +167,7 @@
       line-height: 1;
       font-weight: 950;
       letter-spacing: clamp(.22em, 2.2vw, .45em);
-      text-indent: clamp(.22em, 2.2vw, .45em);
+      text-indent: 0;
       color: var(--ink);
       text-transform: uppercase;
       text-shadow: 7px 9px 0 rgba(0,0,0,.28), -2px 0 0 rgba(0,0,0,.22);
