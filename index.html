@@ -1,11 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TCHITCHIKOF</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TCHITCHIKOF</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #050505;
+      --soft: rgba(0, 0, 0, .09);
+      --line: rgba(0, 0, 0, .16);
+      --strong: rgba(0, 0, 0, .84);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0 1px, transparent 1px 8px),
+        linear-gradient(var(--soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--soft) 1px, transparent 1px),
+        radial-gradient(circle at center, #fff 0 44%, #f4f4f1 72%, #ededeb 100%);
+      background-size: auto, clamp(42px, 9vw, 145px) clamp(42px, 9vw, 145px), clamp(42px, 9vw, 145px) clamp(42px, 9vw, 145px), auto;
+      color: var(--ink);
+      font-family: Arial Black, Helvetica Neue, Helvetica, Arial, sans-serif;
+    }
+
+    .field {
+      width: min(94vw, 1280px);
+      min-height: min(88svh, 760px);
+      display: grid;
+      place-items: center;
+      position: relative;
+      padding: clamp(36px, 7vw, 92px) clamp(20px, 6vw, 80px);
+    }
+
+    .field::before,
+    .field::after {
+      content: "+";
+      position: fixed;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 300;
+      font-size: clamp(24px, 2vw, 34px);
+      line-height: 1;
+      color: var(--ink);
+      opacity: .9;
+    }
+
+    .field::before { top: 5.2vh; left: 3.4vw; }
+    .field::after { right: 3.4vw; bottom: 5.2vh; }
+
+    .corner-top-right,
+    .corner-bottom-left {
+      position: fixed;
+      width: 22px;
+      height: 22px;
+      font-size: clamp(24px, 2vw, 34px);
+      line-height: 20px;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 300;
+      opacity: .9;
+    }
+
+    .corner-top-right { top: 5.2vh; right: 3.4vw; }
+    .corner-bottom-left { bottom: 5.2vh; left: 3.4vw; }
+
+    .panel {
+      width: min(86vw, 820px);
+      min-height: clamp(460px, 66svh, 690px);
+      display: grid;
+      place-items: center;
+      position: relative;
+      padding: clamp(42px, 7vw, 82px) clamp(18px, 5vw, 72px);
+    }
+
+    .panel::before,
+    .panel::after,
+    .bracket-a,
+    .bracket-b {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .panel::before {
+      inset: 0;
+      border: 2px solid transparent;
+      border-top-color: var(--ink);
+      border-left-color: var(--ink);
+      clip-path: polygon(0 0, 15% 0, 15% 2px, 0 2px, 0 0, 0 18%, 2px 18%, 2px 0, 100% 0, 100% 100%, 0 100%);
+      opacity: .85;
+    }
+
+    .panel::after {
+      inset: 0;
+      border: 2px solid transparent;
+      border-right-color: var(--ink);
+      border-bottom-color: var(--ink);
+      clip-path: polygon(85% calc(100% - 2px), 100% calc(100% - 2px), 100% 82%, calc(100% - 2px) 82%, calc(100% - 2px) 100%, 85% 100%, 85% calc(100% - 2px), 0 0, 100% 0, 100% 100%, 0 100%);
+      opacity: .85;
+    }
+
+    .bracket-a {
+      top: clamp(34px, 7vw, 76px);
+      left: 18%;
+      width: 38%;
+      height: 44%;
+      border-top: 1px solid var(--strong);
+      border-left: 1px solid var(--strong);
+      opacity: .62;
+    }
+
+    .bracket-b {
+      right: 18%;
+      bottom: clamp(76px, 12vw, 142px);
+      width: 38%;
+      height: 44%;
+      border-right: 1px solid var(--strong);
+      border-bottom: 1px solid var(--strong);
+      opacity: .62;
+    }
+
+    .glitch-line {
+      position: absolute;
+      background: var(--ink);
+      opacity: .85;
+      transform-origin: center;
+    }
+
+    .glitch-line.l1 { top: 8%; left: 33%; width: 38%; height: 1px; box-shadow: 140px 0 0 rgba(0,0,0,.18), 174px 0 0 rgba(0,0,0,.12); }
+    .glitch-line.l2 { top: 74%; left: 24%; width: 52%; height: 1px; }
+    .glitch-line.l3 { top: 52%; left: -10%; width: 16%; height: 2px; box-shadow: 20px -18px 0 var(--ink), 48px -18px 0 var(--ink); }
+    .glitch-line.l4 { top: 52%; right: -10%; width: 16%; height: 2px; box-shadow: -20px -18px 0 var(--ink), -48px -18px 0 var(--ink); }
+    .glitch-line.v1 { left: 50%; top: -10%; width: 1px; height: 26%; box-shadow: 0 50px 0 var(--ink), 0 88px 0 rgba(0,0,0,.45); }
+    .glitch-line.v2 { left: 50%; bottom: -10%; width: 1px; height: 22%; box-shadow: 0 -48px 0 var(--ink); }
+
+    main {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      justify-items: center;
+      gap: clamp(34px, 6vw, 74px);
+      text-align: center;
+      width: 100%;
+    }
+
+    .logo {
+      width: clamp(150px, 22vw, 270px);
+      height: auto;
+      display: block;
+      filter: contrast(1.25) grayscale(1);
+    }
+
+    h1 {
+      position: relative;
+      font-size: clamp(31px, 5.8vw, 76px);
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: clamp(.22em, 2.2vw, .45em);
+      text-indent: clamp(.22em, 2.2vw, .45em);
+      color: var(--ink);
+      text-transform: uppercase;
+      text-shadow: 7px 9px 0 rgba(0,0,0,.28), -2px 0 0 rgba(0,0,0,.22);
+      animation: twitch 5s steps(1, end) infinite;
+    }
+
+    h1::before,
+    h1::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: .42;
+    }
+
+    h1::before { transform: translate(5px, -2px); clip-path: inset(0 0 62% 0); }
+    h1::after { transform: translate(-6px, 3px); clip-path: inset(57% 0 0 0); }
+
+    @keyframes twitch {
+      0%, 88%, 100% { transform: translate(0,0); }
+      89% { transform: translate(-3px, 1px); }
+      91% { transform: translate(4px, -1px); }
+      93% { transform: translate(-1px, 2px); }
+    }
+
+    @media (max-width: 680px) {
+      body { overflow: auto; }
+
+      .field {
+        width: 100vw;
+        min-height: 100svh;
+        padding-inline: 18px;
+      }
+
+      .panel {
+        width: 100%;
+        min-height: 76svh;
+        padding-block: 72px 64px;
+      }
+
+      .bracket-a { left: 8%; width: 58%; height: 38%; }
+      .bracket-b { right: 8%; width: 58%; height: 38%; bottom: 24%; }
+
+      .logo { width: clamp(132px, 44vw, 210px); }
+
+      h1 {
+        font-size: clamp(24px, 8.4vw, 44px);
+        letter-spacing: .18em;
+        text-indent: .18em;
+        text-shadow: 4px 6px 0 rgba(0,0,0,.24), -1px 0 0 rgba(0,0,0,.2);
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>TCHITCHIKOF</h1>
-	<h1>Hello, world!</h1>
+  <section class="field" aria-label="TCHITCHIKOF landing page">
+    <div class="corner-top-right">+</div>
+    <div class="corner-bottom-left">+</div>
+
+    <div class="panel">
+      <span class="bracket-a"></span>
+      <span class="bracket-b"></span>
+      <span class="glitch-line l1"></span>
+      <span class="glitch-line l2"></span>
+      <span class="glitch-line l3"></span>
+      <span class="glitch-line l4"></span>
+      <span class="glitch-line v1"></span>
+      <span class="glitch-line v2"></span>
+
+      <main>
+        <img class="logo" src="logo.png" alt="TCHITCHIKOF logo" />
+        <h1 data-text="TCHITCHIKOF">TCHITCHIKOF</h1>
+      </main>
+    </div>
+  </section>
 </body>
 </html>
