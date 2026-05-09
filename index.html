@@ -21,7 +21,9 @@
       min-height: 100svh;
       display: grid;
       place-items: center;
-      overflow: hidden;
+      overflow-x: hidden;
+      scrollbar-gutter: stable both-edges;
+      overflow-y: auto;
       background:
         repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0 1px, transparent 1px 8px),
         linear-gradient(var(--soft) 1px, transparent 1px),
@@ -33,7 +35,7 @@
     }
 
     .field {
-      width: min(94vw, 1280px);
+      width: min(100%, 1280px);
       min-height: min(88svh, 760px);
       display: grid;
       place-items: center;
@@ -159,6 +161,7 @@
       width: clamp(150px, 22vw, 270px);
       height: auto;
       display: block;
+      margin-inline: auto;
       filter: contrast(1.25) grayscale(1);
     }
 
@@ -182,7 +185,9 @@
       content: attr(data-text);
       position: absolute;
       inset: 0;
-      overflow: hidden;
+      overflow-x: hidden;
+      scrollbar-gutter: stable both-edges;
+      overflow-y: auto;
       opacity: .42;
     }
 
