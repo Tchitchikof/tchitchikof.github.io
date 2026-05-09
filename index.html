@@ -193,6 +193,223 @@
       93% { transform: translate(-1px, 2px); }
     }
 
+    /* ── MESSAGE BUTTON ── */
+    .msg-btn {
+      font-family: Arial Black, Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: clamp(10px, 1.3vw, 13px);
+      font-weight: 900;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: transparent;
+      border: 1.5px solid var(--ink);
+      padding: .55em 1.6em .5em;
+      cursor: pointer;
+      position: relative;
+      transition: background .12s, color .12s;
+      outline: none;
+    }
+
+    .msg-btn::before,
+    .msg-btn::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-color: var(--ink);
+      border-style: solid;
+    }
+    .msg-btn::before { top: -3px; left: -3px; border-width: 1.5px 0 0 1.5px; }
+    .msg-btn::after  { bottom: -3px; right: -3px; border-width: 0 1.5px 1.5px 0; }
+
+    .msg-btn:hover { background: var(--ink); color: #f7f7f4; }
+    .msg-btn:hover::before,
+    .msg-btn:hover::after { border-color: #f7f7f4; }
+
+    /* ── OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(5,5,5,.55);
+      backdrop-filter: blur(2px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .overlay.open { display: flex; }
+
+    /* ── MODAL ── */
+    .modal {
+      width: min(92vw, 520px);
+      background: #f7f7f4;
+      border: 1.5px solid var(--ink);
+      position: relative;
+      padding: clamp(28px, 5vw, 48px) clamp(22px, 5vw, 44px);
+      animation: modal-in .18s ease;
+    }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal::before,
+    .modal::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .modal::before {
+      inset: 0;
+      border: 1px solid transparent;
+      border-top-color: var(--ink);
+      border-left-color: var(--ink);
+      clip-path: polygon(0 0, 20% 0, 20% 1px, 0 1px, 0 0, 0 22%, 1px 22%, 1px 0, 100% 0, 100% 100%, 0 100%);
+      opacity: .5;
+    }
+
+    .modal::after {
+      inset: 0;
+      border: 1px solid transparent;
+      border-right-color: var(--ink);
+      border-bottom-color: var(--ink);
+      clip-path: polygon(80% calc(100% - 1px), 100% calc(100% - 1px), 100% 78%, calc(100% - 1px) 78%, calc(100% - 1px) 100%, 80% 100%, 80% calc(100% - 1px), 0 0, 100% 0, 100% 100%, 0 100%);
+      opacity: .5;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 300;
+      font-size: 22px;
+      color: var(--ink);
+      opacity: .7;
+      line-height: 1;
+      padding: 4px 6px;
+      transition: opacity .12s;
+    }
+    .modal-close:hover { opacity: 1; }
+
+    .modal-title {
+      font-size: clamp(11px, 1.6vw, 14px);
+      font-weight: 900;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      margin-bottom: clamp(20px, 4vw, 32px);
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0,0,0,.14);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .6;
+      margin-bottom: 6px;
+    }
+
+    .form-label .counter {
+      font-weight: 400;
+      letter-spacing: .05em;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(0,0,0,.3);
+      padding: 6px 2px 8px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+
+    .form-textarea {
+      resize: none;
+      display: block;
+      height: 80px;
+      line-height: 1.5;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-bottom-color: var(--ink);
+    }
+
+    .form-input.error,
+    .form-textarea.error {
+      border-bottom-color: #c0392b;
+    }
+
+    .error-msg {
+      font-size: 10px;
+      color: #c0392b;
+      letter-spacing: .08em;
+      margin-top: 4px;
+      min-height: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .send-btn {
+      margin-top: 24px;
+      width: 100%;
+      font-family: Arial Black, Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: #f7f7f4;
+      background: var(--ink);
+      border: 1.5px solid var(--ink);
+      padding: .75em 1em;
+      cursor: pointer;
+      transition: opacity .12s;
+      outline: none;
+    }
+
+    .send-btn:disabled {
+      opacity: .28;
+      cursor: not-allowed;
+    }
+
+    .send-btn:not(:disabled):hover { opacity: .78; }
+
+    /* status messages */
+    .status-msg {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-align: center;
+      margin-top: 12px;
+      min-height: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .status-msg.ok  { color: #1a7a3f; }
+    .status-msg.err { color: #c0392b; }
+    .status-msg.wait { color: #7a5c00; }
+
     @media (max-width: 680px) {
       body { overflow: auto; }
 
@@ -240,8 +457,182 @@
       <main>
         <img class="logo" src="logo.png" alt="TCHITCHIKOF logo" />
         <h1 data-text="TCHITCHIKOF">TCHITCHIKOF</h1>
+        <button class="msg-btn" id="openModal" aria-haspopup="dialog">Message me</button>
       </main>
     </div>
   </section>
+
+  <!-- MODAL OVERLAY -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal-close" id="closeModal" aria-label="Close">&#215;</button>
+      <div class="modal-title" id="modalTitle">Message</div>
+
+      <form id="contactForm" novalidate>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Name</span>
+            <span class="counter" id="nameCounter">0 / 20</span>
+          </div>
+          <input class="form-input" type="text" id="nameField" maxlength="20" autocomplete="off" spellcheck="false" />
+          <div class="error-msg" id="nameError"></div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label"><span>E-mail</span></div>
+          <input class="form-input" type="email" id="emailField" autocomplete="email" spellcheck="false" />
+          <div class="error-msg" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>Message</span>
+            <span class="counter" id="msgCounter">0 / 160</span>
+          </div>
+          <textarea class="form-textarea" id="msgField" maxlength="160"></textarea>
+          <div class="error-msg" id="msgError"></div>
+        </div>
+
+        <button class="send-btn" type="submit" id="sendBtn" disabled>Send</button>
+        <div class="status-msg" id="statusMsg"></div>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ── CONFIG ── replace YOUR_FORM_ID with your Formspree form ID ── */
+    const FORMSPREE_URL = "https://formspree.io/f/YOUR_FORM_ID";
+    const RATE_KEY      = "tchitchikof_last_send";
+    const RATE_MS       = 60 * 60 * 1000; /* 1 hour */
+
+    const overlay     = document.getElementById("overlay");
+    const openBtn     = document.getElementById("openModal");
+    const closeBtn    = document.getElementById("closeModal");
+    const form        = document.getElementById("contactForm");
+    const nameField   = document.getElementById("nameField");
+    const emailField  = document.getElementById("emailField");
+    const msgField    = document.getElementById("msgField");
+    const sendBtn     = document.getElementById("sendBtn");
+    const statusMsg   = document.getElementById("statusMsg");
+    const nameCounter = document.getElementById("nameCounter");
+    const msgCounter  = document.getElementById("msgCounter");
+    const nameError   = document.getElementById("nameError");
+    const emailError  = document.getElementById("emailError");
+    const msgError    = document.getElementById("msgError");
+
+    /* open / close */
+    openBtn.addEventListener("click", () => {
+      overlay.classList.add("open");
+      nameField.focus();
+    });
+
+    function closeModal() {
+      overlay.classList.remove("open");
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+    /* counters */
+    nameField.addEventListener("input", () => {
+      nameCounter.textContent = nameField.value.length + " / 20";
+      validate();
+    });
+
+    msgField.addEventListener("input", () => {
+      msgCounter.textContent = msgField.value.length + " / 160";
+      validate();
+    });
+
+    emailField.addEventListener("input", validate);
+
+    /* email regex */
+    function isValidEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+    }
+
+    /* validation — returns true if all fields are ok */
+    function validate() {
+      const nameOk  = nameField.value.trim().length > 0;
+      const emailOk = emailField.value.trim().length > 0 && isValidEmail(emailField.value);
+      const msgOk   = msgField.value.trim().length > 0;
+      sendBtn.disabled = !(nameOk && emailOk && msgOk);
+      return nameOk && emailOk && msgOk;
+    }
+
+    /* inline error hints on blur */
+    emailField.addEventListener("blur", () => {
+      if (emailField.value.trim() && !isValidEmail(emailField.value)) {
+        emailField.classList.add("error");
+        emailError.textContent = "Please enter a valid e-mail address.";
+      } else {
+        emailField.classList.remove("error");
+        emailError.textContent = "";
+      }
+    });
+
+    emailField.addEventListener("focus", () => {
+      emailField.classList.remove("error");
+      emailError.textContent = "";
+    });
+
+    /* submit */
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+
+      /* rate-limit check (client-side, per-browser) */
+      const last = parseInt(localStorage.getItem(RATE_KEY) || "0", 10);
+      const now  = Date.now();
+      if (now - last < RATE_MS) {
+        const mins = Math.ceil((RATE_MS - (now - last)) / 60000);
+        statusMsg.className = "status-msg wait";
+        statusMsg.textContent = "Please wait " + mins + " min" + (mins > 1 ? "s" : "") + " before sending another message.";
+        return;
+      }
+
+      sendBtn.disabled = true;
+      statusMsg.className = "status-msg";
+      statusMsg.textContent = "Sending\u2026";
+
+      try {
+        const res = await fetch(FORMSPREE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            name:    nameField.value.trim(),
+            email:   emailField.value.trim(),
+            message: msgField.value.trim(),
+            /* Formspree special fields */
+            _replyto: emailField.value.trim(),
+            _subject: nameField.value.trim()
+          })
+        });
+
+        if (res.ok) {
+          localStorage.setItem(RATE_KEY, String(Date.now()));
+          statusMsg.className = "status-msg ok";
+          statusMsg.textContent = "Message sent.";
+          form.reset();
+          nameCounter.textContent = "0 / 20";
+          msgCounter.textContent  = "0 / 160";
+          sendBtn.disabled = true;
+          setTimeout(closeModal, 1800);
+        } else {
+          const data = await res.json().catch(() => ({}));
+          statusMsg.className = "status-msg err";
+          statusMsg.textContent = data.error || "Something went wrong. Please try again.";
+          sendBtn.disabled = false;
+        }
+      } catch {
+        statusMsg.className = "status-msg err";
+        statusMsg.textContent = "Network error. Please try again.";
+        sendBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
